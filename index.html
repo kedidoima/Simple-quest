@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chơi game có thưởng</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+</head>
+<body>
+    <div class="option">
+        <div class="addQuests">
+            <button id="addQuest">Add quest</button>
+            <div id="addQuestForm" class="addQuestForm">
+                
+            </div>
+            
+        </div>
+        <div class="delQuest">
+            <button id='delQuest' >Delete quest(click again to turn off)</button>
+    </div></div>
+    
+    <div class="score">
+        <p>Điểm của bạn : </p> 
+        <p class="yourScore" id="yourScore"></p>
+    </div>
+    
+    <div class = "quests">
+        <div class="lleftSide">
+            <div class="delLayout" id="delLayout">
+            </div>
+            <div id="leftSide" class="leftSide">
+            </div>
+        </div>
+        <div class="rightSide">
+            <div class="contentQuest" id="contentQuest">
+            </div>
+            <div class="optionAns" id="optionAns">
+            </div>
+        </div>
+    </div>
+    <div class="ranh">
+        <p id="gameNotification" class="gameNotification" ></p>
+    </div>
+    
+    <script>
+        var listQuest= [
+            {
+                id : 1,
+                content : 'Ban hung dep trai vl ?',
+                optionAns : ["A.Dung vl" , 'B.Deo phai cai' , 'C.lai bao sai' , 'D.All of them'] ,
+                ansOfQuest : "D"
+            },
+            {
+                id : 2,
+                content : 'Trâm là ai ?',
+                optionAns : ["A.Người yêu quốc dân." , 'B.Người yêu Đạt.' , 'C.Không biết.' , 'D.Chịu.'] ,
+                ansOfQuest : "B"
+            },
+            {
+                id : 1,
+                content : 'Chạy deadline mệt không?',
+                optionAns : ["A.Đéo thở nổi :(" , 'B.Bình thường' , 'C.Dễ vl' , 'D.Deadline là gì vậy?'] ,
+                ansOfQuest : "A"
+            },
+            {
+                id : 1,
+                content : 'Bla Bla Bla...',
+                optionAns : ["A.as" , 'B.fd' , 'C.fdf' , 'D.advs'] ,
+                ansOfQuest : "B"
+            },
+            {
+                id : 1,
+                content : 'anaana',
+                optionAns : ["A.as" , 'B.fd' , 'C.fdf' , 'D.advs'] ,
+                ansOfQuest : "B"
+            },
+            {
+                id : 1,
+                content : 'anaana',
+                optionAns : ["A.as" , 'B.fd' , 'C.fdf' , 'D.advs'] ,
+                ansOfQuest : "B"
+            }
+        ];
+        //var idQuest=document.getElementsByClassName("leftSide");
+        var addQuest=          document.getElementById("addQuest");
+        var addQuestForm=      document.getElementById("addQuestForm");
+        
+        var contentQuest=      document.getElementById("contentQuest");
+        var optionAns =        document.getElementById("optionAns");
+        var gameNotification = document.getElementById("gameNotification");
+        var questButton =      document.getElementById("leftSide");
+        var yourScore =        document.getElementById("yourScore");
+        var delQuest=          document.getElementById('delQuest');
+        var score=0;
+        var fr=[true,true,true,true,true];
+        yourScore.innerHTML=score;
+        function updateListQuest(){
+            listQuest=[];
+            var questContent=JSON.parse(localStorage.getItem('questContent'));
+            var questOptions=JSON.parse(localStorage.getItem('questOptions'));
+            var questAns = JSON.parse(localStorage.getItem('questAns'));
+            for (var i=0; i<questContent.length; i++) 
+            {
+                var quest={
+                    content : questContent[i],
+                    optionAns : questOptions[i],
+                    ansOfQuest : questAns[i]
+                }
+                listQuest.push(quest);
+                //showAllQuest();
+            }
+            fr.push(true);
+        }
+        if (localStorage.getItem('questContent')===null) updateLocal();
+        updateListQuest();
+        function updateLocal(){
+            var questContent=listQuest.map(function(val){
+                return val.content;
+            });
+            localStorage.setItem('questContent',JSON.stringify(questContent));
+            var questOptions=listQuest.map(function(val){
+                return val.optionAns;
+            });
+            localStorage.setItem('questOptions',JSON.stringify(questOptions));
+            var questAns=listQuest.map(function(val){
+                return val.ansOfQuest;
+            });
+            localStorage.setItem('questAns',JSON.stringify(questAns));
+            //listQuest=[];
+        }
+        updateLocal();
+        //updateListQuest();
+        addQuest.addEventListener('click',add);
+        function add(){
+            addQuestForm.innerHTML="<label for='addQuestContent'>Quest content :</label><input type='text' id='addQuestContent' class='inputForm'><label for='addQuestOptionA'>Quest option A :</label><input type='text' id='addQuestOptionA' class='inputForm'><label for='addQuestOptionB'>Quest option B :</label><input type='text' id='addQuestOptionB' class='inputForm'><label for='addQuestOptionC'>Quest option C :</label><input type='text' id='addQuestOptionC' class='inputForm'><label for='addQuestOptionD'>Quest option D :</label><input type='text' id='addQuestOptionD' class='inputForm'><label for='questAns'>Ans of quest :</label><input type='text' class='inputForm' id='questAns'><button class='submit' id='submit'>Submit</button>";
+            var submit=            document.getElementById("submit");
+            submit.addEventListener('click',submitQuest);
+        }
+        
+        function submitQuest(){
+            var addQuestContent=document.getElementById('addQuestContent');
+            if (addQuestContent.value===''){
+                addQuestForm.innerHTML="";
+                return;
+            }
+            var listAns=[];
+            var ele=document.getElementById('addQuestOptionA'); 
+            if (ele.value==='') {addQuestForm.innerHTML=""; return;} listAns.push('A.'+ele.value);
+                ele=document.getElementById('addQuestOptionB'); 
+            if (ele.value==='') {addQuestForm.innerHTML=""; return;} listAns.push('B.'+ele.value);
+                ele=document.getElementById('addQuestOptionC'); 
+            if (ele.value==='') {addQuestForm.innerHTML=""; return;} listAns.push('C.'+ele.value);
+                ele=document.getElementById('addQuestOptionD'); 
+            if (ele.value==='') {addQuestForm.innerHTML=""; return;} listAns.push('D.'+ele.value);
+            var ansQuest=document.getElementById('questAns').value;
+            if (ansQuest==='') {addQuestForm.innerHTML=""; return;}
+            var quest={
+                content : addQuestContent.value,
+                optionAns : listAns,
+                ansOfQuest : ansQuest
+            };
+            listQuest.push(quest);
+            updateLocal();
+            updateListQuest();
+            showAllQuest();
+            addQuestForm.innerHTML="";
+        }
+        function showAllQuest(){
+            var stringData='';
+            for (var i=0; i<listQuest.length; i++)
+            {
+                stringData+="<button id='quest" + i + "' class='quest' onclick='showQuest("+i+")'>Quest "+(i+1)+"</button>";
+            }
+            questButton.innerHTML=stringData;
+        }
+        showAllQuest();
+        function showQuest(x){
+            contentQuest.innerHTML=listQuest[x].content;
+            var listString=listQuest[x].optionAns.map(function(val,i){
+                return "<button class='option' onclick='checkAns("+x+","+i+")'>"+listQuest[x].optionAns[i]+"</button>"
+            });
+            var stringData=listString.join('');
+            
+            optionAns.innerHTML=stringData;
+            
+        }
+        
+        function checkAns (x,y){
+            if (listQuest[x].optionAns[y].indexOf(listQuest[x].ansOfQuest) === 0){
+                score++;
+                yourScore.innerHTML=score;
+                var tg='quest'+x;
+                document.getElementById(tg).disabled = true;
+                if (score===5) gameNotification.innerHTML="You win!!!";
+                fr[x]=false;
+                for (var i=0; i<listQuest.length; i++) 
+                    if (fr[i]){
+                        showQuest(i);
+                        break;
+                    }
+            }
+            else {
+                gameNotification.innerHTML="You lose!!!";
+                for (var i=0; i<listQuest.length; i++)
+                    document.getElementById('quest'+i).disabled = true;
+            }
+        }
+        //------------------------------------------------------
+        delQuest.addEventListener('click',del);
+        var count=0;
+        var delLayout = document.getElementById('delLayout');
+        function del(){
+            count++;
+            if (count%2===1){
+                var stringData='';
+                for (var i=0; i<listQuest.length; i++){
+                    stringData+='<button id="del0" class="delBut" onclick="deleteQuest('+i+')">X</button>';
+                }
+                delLayout.innerHTML=stringData;
+            } else {
+                delLayout.innerHTML='';
+            }
+        }
+        function deleteQuest(x){
+            listQuest.splice(x,1);
+            showAllQuest();
+            updateLocal();
+            del(); del();
+        }
+        //togle 
+    </script>
+   
+</body>
+</html>

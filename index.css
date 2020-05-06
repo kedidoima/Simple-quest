@@ -1,0 +1,104 @@
+.option {
+    width: 310px;
+    height: 50px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.option .addQuests{
+    margin-bottom: 10px;
+}
+.addQuestForm{
+    width: 300px;
+}
+.inputForm{
+    width: 300px;
+    background-color: rgb(248, 244, 226);
+}
+
+.score {
+    width: 200px;
+    height: 100px;
+    margin: auto;
+    padding-left: 5px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: rgb(150, 207, 243);
+}
+.score .yourScore {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(186, 217, 236);
+    margin: auto;
+    padding-left: 5px;
+    padding-top: 2px;
+}
+.quests {
+    display: flex;
+    background-color: #10162f;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: 600px;
+    height: 300px;
+    margin: auto;
+}
+.quests .lleftSide {
+    width: 110px;
+    height: 296px;
+    display: flex;
+    border: 2px solid #2d5dcc;
+}
+.quests .lleftSide .delLayout {
+    width: 50px;
+}
+.quests .lleftSide .delLayout .delBut {
+    width: 30px;
+    height: 30px;
+}
+.quests .leftSide {
+    width: 80px;
+    height: 100%;
+}
+.quests .leftSide .quest {
+    width: 80px;
+    height: 30px;
+    background-color: #141e3b;
+    color: #4fe0b0;
+}
+.quests .rightSide{
+    width: 490px;
+    height: 100%;
+}
+.quests .rightSide .contentQuest{
+    width: 490px;
+    height: 50%;
+    color: snow;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.quests .rightSide .optionAns{
+    width: 100%;
+    height: 50%;
+}
+.quests .rightSide .optionAns .option{
+    width: 477px;
+    height: 20%;
+    border: 1px solid #2d5dcc;
+    background-color: #141e3b;
+    color: #4fe0b0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.ranh {
+    width: 100%;
+}
+.ranh .gameNotification {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 50px;
+    width: 230px;
+    margin: auto;
+}
+
+
+
+
+
